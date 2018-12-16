@@ -181,5 +181,11 @@ public class ReportService {
     	 Student student =  studentRepo.getStudent(id);
     	 System.out.println("student result "+student.toString());
     }
+    
 
+    public void getAllStudentDetails() {
+   	 List<Student> studentList =  studentRepo.getAllStudents();
+   	 System.out.println("student result "+studentList.size());
+   }
+   
 }

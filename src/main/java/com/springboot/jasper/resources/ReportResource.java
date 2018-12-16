@@ -152,4 +152,12 @@ public class ReportResource {
     	reportService.getStudentDetails(id);
                   
     }
+    
+    @RequestMapping(path = "/students/all", method = RequestMethod.GET)
+    public void getAllStudentData()
+    {
+    	reportService.getAllStudentDetails();
+                  
+    }
+    
 }
