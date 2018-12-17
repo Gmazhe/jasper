@@ -1,14 +1,19 @@
 package com.springboot.jasper.services;
 
 import com.springboot.jasper.enums.ExportReportType;
+import com.springboot.jasper.model.Car;
 import com.springboot.jasper.model.Report;
 import com.springboot.jasper.model.Student;
+import com.springboot.jasper.model.StudentBudgetCode;
 import com.springboot.jasper.repositary.StudentRepositary;
 import com.springboot.jasper.utils.ReportParams;
 import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
@@ -23,6 +28,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -188,4 +194,24 @@ public class ReportService {
    	 System.out.println("student result "+studentList.size());
    }
    
+    public void getBudgetCodeStudentsList() {
+      	 List<StudentBudgetCode> studentList =  studentRepo.getBudgetCodeStudentsList();
+      	 System.out.println("student result "+studentList.size());
+      	 
+      	String report = "src/main/resources/student.jrxml";
+        JasperReport jreport;
+		try {
+			jreport = JasperCompileManager.compileReport(report);
+		    JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(studentList);
+            HashMap params = new HashMap();
+            JasperPrint jprint = JasperFillManager.fillReport(jreport, params, ds);
+            JasperExportManager.exportReportToPdfFile(jprint,
+                    "src/main/resources/student.pdf");
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      }
+      
+       
 }

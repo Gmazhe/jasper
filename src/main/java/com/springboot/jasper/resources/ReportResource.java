@@ -119,6 +119,15 @@ public class ReportResource {
         }
     }
     
+   // list of students who have the budget code of AWAY on the RBAPBUD form for the 1819 aid year.
+    @RequestMapping(path = "/students/budgetcode/list", method = RequestMethod.GET)
+    public ResponseEntity<String> getBudgetCodeStudentsList()
+    {
+    	 reportService.getBudgetCodeStudentsList();
+    	   return new ResponseEntity<>("File Created", HttpStatus.OK);
+    }
+    
+    
     @RequestMapping(path = "/report", method = RequestMethod.GET)
     public void generateDataSourceReports()
     {
@@ -159,5 +168,6 @@ public class ReportResource {
     	reportService.getAllStudentDetails();
                   
     }
+    
     
 }
